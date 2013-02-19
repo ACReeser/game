@@ -58,7 +58,7 @@ Now pick a race!
 def make():
   name = raw_input("Name? > ")
   mainpc = Character(name)
-  mainpcname = mainpc.name
+  mainpcname = mainpc.name.capitalize()
   mainpcstats = mainpc.char_abil
   print "STR: %d\nDEX: %d\nCON: %d\nINT: %d\nWIS: %d\nCHA: %d" % (mainpcstats[0], mainpcstats[1], mainpcstats[2], mainpcstats[3], mainpcstats[4], mainpcstats[5])
   mainpc_race = mainpc.race()
