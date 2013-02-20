@@ -25,9 +25,9 @@ while True:
    elif event == ord(" "):
       screen.clear()
       center("The User Pressed The Space Bar")
-   elif event == ord("^^A"):
-      screen.clear()
-      center("The User pressed the up key.")   
+ #  elif event == ord("^^A"):
+ #     screen.clear()
+ #     center("The User pressed the up key.")   
 
 curses.endwin()
 
