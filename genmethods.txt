@@ -1,0 +1,11 @@
+######## Character Generation Progression and Random NPC Generation ########
+----------------------------------------------------------------------------
+CHARACTER GENERATION PROGRESSION OVERVIEW...
+  1. Obtain PLR name, store as mainpc's name
+  2. Obtain PLR gender, set Male or Female true
+    a) M or F TRUE should trigger pronoun definition
+  3. Generate Ability Scores
+    a) Via point-buy or random rolls
+  4. Obtain PLR race, store as mainpc's race
+    a) Special abilities granted
+    b) Apply racial bonuses to ability scores
