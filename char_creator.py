@@ -2,6 +2,42 @@ import os
 import random
 from random import randint
 
+def explainrace():
+  
+  racetext = {
+  '1' : 'Dwarves usually stand 5 feet high, with a stout build. They pride themselves\n' \
+        'on their long head and facial hair. They decorate their beards with clasps\n' \
+        'and intricate braids.\n\n' \
+        'Dwarves make their homes in sprawling mountain fortresses and cities, where\n' \
+        'they puruse their love of stonework, metal craftmanship, architecture, and\n' \
+        'drink.'
+  }
+
+  while 1:
+    os.system("clear")
+    print """
+Enter the number of the race you wish to know about
+  Or 'q' to return to the race selection options
+---------------------------------------------------
+        1 - Dwarf
+        2 - Halfling
+        3 - Elf
+        4 - Human
+        5 - Gnome
+        6 - Half-Orc
+        7 - Half-Elf
+        8 - Catfolk
+        9 - Goblin
+        10 - Orc
+    """
+    next = raw_input("> ")
+    if next in racetext:
+      os.system("clear")
+      print racetext[(next)]
+    elif next == 'q' or next == 'Q':
+      break
+    raw_input("\nPress ENTER")
+
 class UserMake(object):
   """Wump"""
   def __init__(self, name):
@@ -41,6 +77,7 @@ class UserMake(object):
         go += 1
       r_nums[i] = (r_fourdsix[0] + r_fourdsix[1] + r_fourdsix[2] + r_fourdsix[3]) - min(r_fourdsix)
     print r_nums
+    raw_input("Press ENTER")
 
 
 mainpc = UserMake(raw_input("Name? "))
@@ -59,3 +96,30 @@ Which kind of ability score system would you like to use?
   elif int(next) == 2:
     mainpc.randroll()
     break
+  else:
+    print "Sorry?"
+
+while 1:
+  os.system("clear")
+  print """
+\nRace Selection
+'^^^^^__^^^^^'
+-..---::---..-
+1 - Dwarf
+2 - Halfling
+3 - Elf
+4 - Human
+5 - Gnome
+6 - Half-Orc
+7 - Half-Elf
+8 - Catfolk
+9 - Goblin
+10 - Orc
+-..---::---..-
+_vvvvv--vvvvv_
+Race Info: 'h'
+"""
+  next = raw_input("> ")
+
+  if next == "h" or next == "H":
+    explainrace()
