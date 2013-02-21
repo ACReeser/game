@@ -1,15 +1,16 @@
 import os
+import random
+from random import randint
 
-
-class Character(object):
+class UserMake(object):
   """Wump"""
   def __init__(self, name):
-    i = [0, 1, 2, 3, 4, 5]
     self.char_abil = [10, 10, 10, 10, 10, 10]
     char_name = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA']
     abil_pnts = 15
     go = 0
 
+  def pointbuy(self):
     for i in self.char_abil:
       os.system("clear")
       print "You have %d points left!\n" % abil_pnts
@@ -29,3 +30,32 @@ class Character(object):
       print self.char_abil
       go += 1
       raw_input("Press ENTER")
+
+  def randroll(self):
+    r_nums = range(6)
+    for i in r_nums:
+      r_fourdsix = range(4)
+      go = 0
+      for j in r_fourdsix:
+        r_fourdsix[go] = randint(1, 6)
+        go += 1
+      r_nums[i] = (r_fourdsix[0] + r_fourdsix[1] + r_fourdsix[2] + r_fourdsix[3]) - min(r_fourdsix)
+    print r_nums
+
+
+mainpc = UserMake(raw_input("Name? "))
+
+while 1:
+  print """
+Which kind of ability score system would you like to use?
+---------------------------------------------------------
+1 - Point Buy
+2 - Standard
+  """
+  next = raw_input("> ")
+  if int(next) == 1:
+    mainpc.pointbuy()
+    break
+  elif int(next) == 2:
+    mainpc.randroll()
+    break
