@@ -9,8 +9,18 @@ def explainrace():
         'on their long head and facial hair. They decorate their beards with clasps\n' \
         'and intricate braids.\n\n' \
         'Dwarves make their homes in sprawling mountain fortresses and cities, where\n' \
-        'they puruse their love of stonework, metal craftmanship, architecture, and\n' \
-        'drink.'
+        'they pursue their love of stonework, metal craftmanship, architecture, and\n' \
+        'drink.\n\n' \
+        'Dwarves detest orcs and goblins and generally distrust all other races\n' \
+        'save for humans, who can match their industrious nature.',
+  '2' : 'Halflings stand only about 3 feet tall and sport hairy feet, which\n' \
+        'are usually barefoot, due to their rough and calloused texture. Curly\n' \
+        'tufts of hair surround their pointed ears\n\n' \
+        'Halflings are nomadic, and claim no homeland, instead living in the\n' \
+        'smaller areas of large cities or in small towns.\n\n' \
+        'They pride themselves on being all sneaky and stuff, which makes them\n' \
+        'really good thieves and other sneaky things like that.',
+  '3' : 'Elves suck a dick'
   }
 
   while 1:
