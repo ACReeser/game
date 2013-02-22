@@ -111,6 +111,8 @@ Which kind of ability score system would you like to use?
 
 while 1:
   os.system("clear")
+  racematch = {'1':'Dwarf','2':'Halfling','3':'Elf','4':'Human','5':'Gnome',
+  '6':'Half-Orc','7':'Half-Elf','8':'Catfolk','9':'Goblin','10':'Orc'}
   print """
 \nRace Selection
 '^^^^^__^^^^^'
@@ -133,3 +135,8 @@ Race Info: 'h'
 
   if next == "h" or next == "H":
     explainrace()
+  elif next in racematch:
+    race = racematch[next]
+    break
+
+print race
