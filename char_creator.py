@@ -2,6 +2,33 @@ import os
 import random
 from random import randint
 
+def racebonus(q, w, e, r, t, y):
+  mainpc.char_abil[0] += q
+  mainpc.char_abil[1] += w
+  mainpc.char_abil[2] += e
+  mainpc.char_abil[3] += r
+  mainpc.char_abil[4] += t
+  mainpc.char_abil[5] += y
+  char_abilreturn = mainpc.char_abil
+  return char_abilreturn
+
+def pickracebonus():
+  os.system("clear")
+  print """
+1 - STR = %d
+2 - DEX = %d
+3 - CON = %d
+4 - INT = %d
+5 - WIS = %d
+6 - CHA = %d
+\nChoose an ability score to increase by 2
+""" % (mainpc.char_abil[0], mainpc.char_abil[1], mainpc.char_abil[2], mainpc.char_abil[3], mainpc.char_abil[4], mainpc.char_abil[5])
+  b = raw_input("> ")
+  mainpc.char_abil[int(b) - 1] = mainpc.char_abil[int(b) - 1] + 2
+  char_abilreturn = mainpc.char_abil
+  return char_abilreturn
+
+
 def explainrace():
   
   racetext = {
@@ -35,7 +62,18 @@ def explainrace():
   '6' : 'Half-Orcs are vicious creatures, but belong neither to humans nor orcs.',
   '7' : 'Since Half-Elves are looked down on by humans and elves alike, they know\n' \
         'loneliness and are more open to accepting others, as a result.',
-  '8' : ''
+  '8' : 'Catfolk are tribal hunter-gatherers who dwell in harmony with nature, though\n' \
+        'some have acclimated well to urban environments. They are lithe, catlike\n' \
+        'humanoids with long tails and pointed ears. Their feline eyes are vertical.\n' \
+        '\nPersonal growth is part of catfolk culture, and they have few taboos.\n' \
+        'They often exhibit harmless but strange eccentricities due to this.',
+  '9' : 'Goblins are three feet tall, but they are made distinctive by their huge\n' \
+        'heads, which dwarf their bodies. They prefer to live in caves, amid large\n' \
+        'and dense thickets of thistles and brambles, or in structures built, and\n' \
+        'then abandoned by others.\n\n' \
+        'Goblins are voracious eaters, and their lairs will usually have storerooms\n' \
+        'and larders to fulfill their appetites. They are universally illiterate.',
+  '10': 'stuff goes here'
   }
 
   while 1:
@@ -70,6 +108,7 @@ class UserMake(object):
     char_name = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA']
     abil_pnts = 15
     go = 0
+    self.name = name
 
   def pointbuy(self):
     for i in self.char_abil:
@@ -92,6 +131,7 @@ class UserMake(object):
       print self.char_abil
       go += 1
       raw_input("Press ENTER")
+      return self.char_abil
 
   def randroll(self):
     r_nums = range(6)
@@ -102,8 +142,35 @@ class UserMake(object):
         r_fourdsix[go] = randint(1, 6)
         go += 1
       r_nums[i] = (r_fourdsix[0] + r_fourdsix[1] + r_fourdsix[2] + r_fourdsix[3]) - min(r_fourdsix)
-    print r_nums
+    
+    print "Assign values to ability scores:"
     raw_input("Press ENTER")
+    for i in range(6):
+      new_range = [0, 0, 0, 0, 0, 0]
+      go = 0
+      print """
+STR = %d
+DEX = %d
+CON = %d
+INT = %d
+WIS = %d
+CHA = %d\n\n
+      """ % (new_range[0], new_range[1], new_range[2], new_range[3], new_range[4], new_range[5])
+      print "Your remaining scores to assign:\n" \
+            "1 - %d\n2 - %d\n3 - %d\n4 - %d\n5 - %d\n6 - %d" % (r_nums[0], r_nums[1], r_nums[2], r_nums[3], r_nums[4], r_nums[5])
+      print "%s Score: " % go in ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA']
+      next = int(raw_input("> "))
+      if next in r_nums:
+        new_range[go] = str(next)
+        print new_range
+        r_nums[go] = 0
+      else:
+        print "You blow."
+
+    return r_nums
+    raw_input("Press ENTER")
+
+
 
 
 mainpc = UserMake(raw_input("Name? "))
@@ -117,13 +184,16 @@ Which kind of ability score system would you like to use?
   """
   next = raw_input("> ")
   if int(next) == 1:
-    mainpc.pointbuy()
+    mainpc.char_abil = mainpc.pointbuy()
     break
   elif int(next) == 2:
-    mainpc.randroll()
+    mainpc.char_abil = mainpc.randroll()
+    print mainpc.char_abil
+    raw_input()
     break
   else:
-    print "Sorry?"
+    os.system("clear")
+
 
 while 1:
   os.system("clear")
@@ -152,7 +222,40 @@ Race Info: 'h'
   if next == "h" or next == "H":
     explainrace()
   elif next in racematch:
-    race = racematch[next]
+    race = racematch[next].lower()
     break
 
 print race
+
+if race == 'dwarf':
+  char_abil = racebonus(0, 0, 2, 0, 2, -2)
+elif race == 'elf':
+  char_abil = racebonus(0, 2, -2, 2, 0, 0)
+elif race == 'gnome':
+  char_abil = racebonus(-2, 0, 2, 0, 0, 2)
+elif race == 'half-elf':
+  char_abil = pickracebonus()
+elif race == 'half-orc':
+  char_abil = pickracebonus()
+elif race == 'human':
+  char_abil = pickracebonus()
+elif race == 'halfling':
+  char_abil = racebonus(-2, 2, 0, 0, 0, 2)
+elif race == 'goblin':
+  char_abil = racebonus(-2, 4, 0, 0, 0, -2)
+elif race == 'orc':
+  char_abil = racebonus(4, 0, 0, -2, -2, -2)
+elif race == 'catfolk':
+  char_abil = racebonus(0, 2, 0, 0, -2, 2)
+
+char_abil_verbose = """
+STR = %d
+DEX = %d
+CON = %d
+INT = %d
+WIS = %d
+CHA = %d
+""" % (char_abil[0], char_abil[1], char_abil[2], char_abil[3], char_abil[4], char_abil[5])
+
+print "%s is a %s." % (mainpc.name.capitalize(), race)
+print char_abil_verbose
