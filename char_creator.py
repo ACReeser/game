@@ -146,8 +146,10 @@ class UserMake(object):
     print "Assign values to ability scores:"
     raw_input("Press ENTER")
     for i in range(6):
+      sorted(r_nums)
+      fuck = {'1':r_nums[5], '2':r_nums[4], '3':r_nums[3],
+              '4':r_nums[2], '5':r_nums[1], '6':r_nums[0]}
       new_range = [0, 0, 0, 0, 0, 0]
-      go = 0
       print """
 STR = %d
 DEX = %d
@@ -155,19 +157,19 @@ CON = %d
 INT = %d
 WIS = %d
 CHA = %d\n\n
-      """ % (new_range[0], new_range[1], new_range[2], new_range[3], new_range[4], new_range[5])
+      """ % (new_range[5], new_range[4], new_range[3], new_range[2], new_range[1], new_range[0])
       print "Your remaining scores to assign:\n" \
-            "1 - %d\n2 - %d\n3 - %d\n4 - %d\n5 - %d\n6 - %d" % (r_nums[0], r_nums[1], r_nums[2], r_nums[3], r_nums[4], r_nums[5])
-      print "%s Score: " % go in ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA']
+            "1 - %d\n2 - %d\n3 - %d\n4 - %d\n5 - %d\n6 - %d" % (r_nums[5], r_nums[4], r_nums[3], r_nums[2], r_nums[1], r_nums[0])
+      print "%s Score: " % i in ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA']
       next = int(raw_input("> "))
       if next in r_nums:
-        new_range[go] = str(next)
+        new_range[i] = str(next)
         print new_range
-        r_nums[go] = 0
+        del r_nums[i]
       else:
         print "You blow."
 
-    return r_nums
+    return new_range
     raw_input("Press ENTER")
 
 
