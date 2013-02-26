@@ -143,19 +143,27 @@ def assignabils():
   abilsnew = [0] * 6
   
   for i in range(6):
-    os.system("clear")
-    print "Assign one of these numbers to your", names[i], "score.\n"
-    print abils
-    
     while 1:
-      next = raw_input("> ")
+      os.system("clear")
+      print "Assign one of these numbers to your", names[i], "score.\n"
+      print abils
       
-      if int(next) in abils:
-        abilsnew[i] = int(next)
-        abils.remove(int(next))
-        break
-      else:
-        print "You picked a number that's not in that list!"
+      next = raw_input("> ")
+
+      try:
+        if int(next) in abils:
+          abilsnew[i] = int(next)
+          abils.remove(int(next))
+          break
+        elif int(next) not in abils:
+          print "You picked a number that's not in the list!"
+          raw_input("PRESS ENTER")
+      except ValueError:
+        if next == 'h' or next == 'H':
+          showhelp()
+        else:
+          print "You picked a number that's not in that list!"
+          raw_input("PRESS ENTER")
 
   return abilsnew
 
@@ -190,6 +198,9 @@ def racebonus():
     return abils
 
   def race_p():
+    os.system("clear")
+    print "Your current ability scores"
+    print "---------------------------"
     showabils()
     print """
 Pick One Ability Score To Increase By 2
@@ -211,9 +222,6 @@ Pick One Ability Score To Increase By 2
         print "You picked an invalid number!"
 
     return abils
-
-  def racehelp():
-    print 'TKTKTK'
 
   race_l = ('dwarf', 'halfling', 'elf', 'human', 'gnome', 'half-orc',
     'half-elf', 'catfolk', 'goblin', 'orc')
@@ -242,7 +250,7 @@ Race Info: 'h'
     next = raw_input("> ")
 
     if next == "h" or next == "H":
-      racehelp()
+      explainrace()
     elif race_l[int(next) - 1] in race_l:
       race = race_l[int(next) - 1]
       if race == "dwarf":
