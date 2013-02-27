@@ -250,36 +250,72 @@ Race Info: 'h'
     """
     next = raw_input("> ")
 
-    if next == "h" or next == "H":
-      explainrace()
-    elif race_l[int(next) - 1] in race_l:
-      race = race_l[int(next) - 1]
-      if race == "dwarf":
-        abilsnew = race_c(0, 0, 2, 0, 2, -2)
-      elif race == "halfling":
-        abilsnew = race_c(-2, 2, 0, 0, 0, 2)
-      elif race == "elf":
-        abilsnew = race_c(0, 2, -2, 2, 0, 0)
-      elif race == "human":
-        abilsnew = race_p()
-      elif race == "gnome":
-        abilsnew = race_c(-2, 0, 2, 0, 0, 2)
-      elif race == "half-orc":
-        abilsnew = race_p()
-      elif race == "half-elf":
-        abilsnew = race_p()
-      elif race == "catfolk":
-        abilsnew = race_c(0, 2, 0, 0, -2, 0)
-      elif race == "goblin":
-        abilsnew = race_c(-2, 4, 0, 0, 0, -2)
-      elif race == "orc":
-        abilsnew = race_c(4, 0, 0, -2, -2, -2)
-      break
-    else:
+    try:
+      if next == "h" or next == "H":
+        explainrace()
+      elif race_l[int(next) - 1] in race_l:
+        race = race_l[int(next) - 1]
+        if race == "dwarf":
+          abilsnew = race_c(0, 0, 2, 0, 2, -2)
+        elif race == "halfling":
+          abilsnew = race_c(-2, 2, 0, 0, 0, 2)
+        elif race == "elf":
+          abilsnew = race_c(0, 2, -2, 2, 0, 0)
+        elif race == "human":
+          abilsnew = race_p()
+        elif race == "gnome":
+          abilsnew = race_c(-2, 0, 2, 0, 0, 2)
+        elif race == "half-orc":
+          abilsnew = race_p()
+        elif race == "half-elf":
+          abilsnew = race_p()
+        elif race == "catfolk":
+          abilsnew = race_c(0, 2, 0, 0, -2, 0)
+        elif race == "goblin":
+          abilsnew = race_c(-2, 4, 0, 0, 0, -2)
+        elif race == "orc":
+          abilsnew = race_c(4, 0, 0, -2, -2, -2)
+        break
+    except ValueError:
       print "You chose an invalid number!"
       raw_input("")
 
-  return abilsnew
+  return abilsnew, race
+
+def choosegender():
+  while 1:
+    os.system("clear")
+    print "Which gender is your character?"
+    print "1 - Female\n2 - Male"
+    next = raw_input("> ")
+
+    if next in ('1', '2'):
+      if next == '1':
+        gender = 'female'
+      elif next == '2':
+        gender = 'male'
+      break
+    else:
+      print "Enter either 1 or 2!"
+      raw_input("PRESS ENTER")
+
+  while 1:
+    os.system("clear")
+    print "What is your character's first name?"
+    first = raw_input("> ").capitalize()
+    print "What is your character's last name?"
+    last = raw_input("> ").capitalize()
+
+    print "Your character's name is", first, last + "?"
+    next = raw_input("> Y/N ")
+
+    if next == "y" or next == "Y":
+      break
+    elif next == "n" or next == "N":
+      pass
+
+  return (first, last, gender)
+
 
 while 1:
   os.system("clear")
@@ -302,5 +338,17 @@ while 1:
     showhelp()
 
 os.system("clear")
-abils = racebonus()
+transfer = racebonus()
+abils = transfer[0]
+race = transfer[1]
+os.system("clear")
+print "Here are your final ability scores!\nNow let's get on to other things!"
 showabils()
+raw_input("\nPRESS ENTER")
+
+identity = choosegender()
+name = (identity[0], identity[1])
+gender = identity[2]
+
+os.system("clear")
+print name[0], name[1], "is a", gender, race + "."
