@@ -46,7 +46,8 @@ def explainrace():
         'then abandoned by others.\n\n' \
         'Goblins are voracious eaters, and their lairs will usually have storerooms\n' \
         'and larders to fulfill their appetites. They are universally illiterate.',
-  '10': 'stuff goes here'
+  '10': 'Look, you do not want to be an orc. They\'re strong, but they\'re also dumb,\n' \
+        'ugly, and overall just shitty.'
   }
 
   while 1:
