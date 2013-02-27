@@ -1,0 +1,4 @@
+u"\u2588" is a full white block
+u"\u2591" is a light white block
+u"\u2592" is a medium white block
+u"\u2593" is a dark white block
