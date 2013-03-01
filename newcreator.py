@@ -12,42 +12,61 @@ def explainrace():
         'they pursue their love of stonework, metal craftsmanship, architecture, and\n' \
         'drink.\n\n' \
         'Dwarves detest orcs and goblins and generally distrust all other races\n' \
-        'save for humans, who can match their industrious nature.',
+        'save for humans, who can match their industrious nature.\n' \
+        '\n Dwarves gain a +2 bonus to their CON and WIS. They have a -2 penalty to CHA.\n'
+        'They are both tough and wise, but also a bit gruff.',
   '2' : 'Halflings stand only about 3 feet tall and sport hairy feet, which\n' \
         'are usually barefoot, due to their rough and calloused texture. Curly\n' \
         'tufts of hair surround their pointed ears\n\n' \
         'Halflings are nomadic, and claim no homeland, instead living in the\n' \
         'smaller areas of large cities or in small towns.\n\n' \
         'They pride themselves on being all sneaky and stuff, which makes them\n' \
-        'really good thieves and other sneaky things like that.',
+        'really good thieves and other sneaky things like that.\n' \
+        '\n Halflings gain a +2 bonus to DEX and CHA, but a -2 penalty to STR.\n' \
+        'They are nimble and strong-willed, but their small stature makes them\n' \
+        'weaker than other races.',
   '3' : 'Elves are tall, graceful creatures with long, pointed ears. Most\n' \
         'feel a bond with nature, and as thus look down on manipulating earth\n' \
         'and stone, feeling more inclined towards finer arts, such as wizardry\n\n' \
         'Though they look down on most other races, elves are good judges of\n' \
         'character, and will admit when someone they may not like is right or\n' \
-        'even of a certain value.',
+        'even of a certain value.\n\n' \
+        'Elves gain a +2 bonus to DEX and INT, but lose -2 to CON.\n' \
+        'They are nimble in mind and in body, but their form is frail.',
   '4' : 'Humans are very versatile creatures, living in all types of environments\n' \
         'and under many different conditions. An average human stands 5 and a half\n' \
         'feet tall, but humans come in all types of shapes and sizes.\n\n' \
         'But to be honest, you are a human, so you know all of this already, so\n' \
-        'so why are you even reading this help page about humans in the first place?',
-  '5' : 'Straight up, gnomes eat penises.',
-  '6' : 'Half-Orcs are vicious creatures, but belong neither to humans nor orcs.',
+        'so why are you even reading this help page about humans in the first place?' \
+        '\n\nHumans can choose one ability score to increase by +2.',
+  '5' : 'Straight up, gnomes eat penises.' \
+        '\n\nGnomes gain a +2 to CON and CHA, but a -2 to STR.\n' \
+        'Gnomes are physically weak, but surprisingly hardy, and their attitude makes\n' \
+        'them naturally agreeable.',
+  '6' : 'Half-Orcs are vicious creatures, but belong neither to humans nor orcs.' \
+        'Their varied nature grants them a +2 bonus to any ability score.',
   '7' : 'Since Half-Elves are looked down on by humans and elves alike, they know\n' \
-        'loneliness and are more open to accepting others, as a result.',
+        'loneliness and are more open to accepting others, as a result.\n\n' \
+        'Their varied nature grants them a +2 bonus to any ability score.',
   '8' : 'Catfolk are tribal hunter-gatherers who dwell in harmony with nature, though\n' \
         'some have acclimated well to urban environments. They are lithe, catlike\n' \
         'humanoids with long tails and pointed ears. Their feline eyes are vertical.\n' \
         '\nPersonal growth is part of catfolk culture, and they have few taboos.\n' \
-        'They often exhibit harmless but strange eccentricities due to this.',
+        'They often exhibit harmless but strange eccentricities due to this.' \
+        '\n\nCatfolk gain a +2 bonus to CHA and DEX, but a -2 to WIS.\n' \
+        'They are known for their lack of common sense, but are agil and amiable.',
   '9' : 'Goblins are three feet tall, but they are made distinctive by their huge\n' \
         'heads, which dwarf their bodies. They prefer to live in caves, amid large\n' \
         'and dense thickets of thistles and brambles, or in structures built, and\n' \
         'then abandoned by others.\n\n' \
         'Goblins are voracious eaters, and their lairs will usually have storerooms\n' \
-        'and larders to fulfill their appetites. They are universally illiterate.',
+        'and larders to fulfill their appetites. They are universally illiterate.' \
+        '\n\nThey gain a +4 bonus to dexterity, but lose -2 points in both STR and CHA.\n' \
+        'They are fast, but weak and unpleasant to be around.',
   '10': 'Look, you do not want to be an orc. They\'re strong, but they\'re also dumb,\n' \
-        'ugly, and overall just shitty.'
+        'ugly, and overall just shitty.\n\n' \
+        'They gain a +4 bonus to STR, but lose -2 points to INT, WIS, and CHA.\n' \
+        'Orcs are brutal and savage. They suck. They really suck.'
   }
 
   while 1:
