@@ -335,6 +335,90 @@ def choosegender():
 
   return (first, last, gender)
 
+def roll_d(x, y=1):
+  exp = 0
+  rolls = [0] * y
+  for i in range(y):
+    rolls[i] = randint(1, x)
+    exp += rolls[i]
+  return exp
+
+def convert_abils(x):
+  exp = [0] * 6
+  for i in range(6):
+    exp[i] = x[i]/2 - 5
+  return exp
+
+def r_bonus(size='medium', speed=30, langss=['common', None, None, None, None, None]):
+  abils_mod = convert_abils(abils)
+  newlangs = []
+  for i in range(abils_mod[3]):
+    os.system("clear")
+    print "Your character is smart! Choose a bonus language from the list!"
+    print "(example: '> common')\n\n"
+    print langss
+    nuttin = raw_input("> ")
+    if nuttin in langss:
+      newlangs.append(nuttin)
+      langss.remove(nuttin)
+    else:
+      print "Welp. I guess you don't want to learn another language..."
+  return newlangs
+
+def chooseclass():
+  def explainclasses():
+    while 1:
+      os.system("clear")
+      print """
+Which class would you like to learn about?
+------------------------------------------
+1 - Bard
+2 - Cleric
+3 - Fighter
+4 - Wizard
+5 - Rogue
+6 - Paladin
+7 - Druid
+8 - Witch
+9 - Alchemist
+10 - Monk
+      """
+      next = raw_input("> ")
+
+
+  while 1:
+    os.system("clear")
+    print "Choose from one of the following classes,"
+    print "or enter 'h' for an explanation of them."
+    print "-" * 40
+    print """
+1 - Bard
+2 - Cleric
+3 - Fighter
+4 - Wizard
+5 - Rogue
+6 - Paladin
+7 - Druid
+8 - Witch
+9 - Alchemist
+10 - Monk
+    """
+    next = raw_input("> ")
+
+    classes = ('bard', 'cleric', 'fighter', 'wizard', 'rogue', 'paladin',
+      'druid', 'witch', 'alchemist', 'monk')
+
+    try:
+      if int(next) - 1 in range(10):
+        playerclass = classes[int(next)]
+        break
+    except ValueError:
+      if next == 'h' or next == 'H':
+        explainclasses()
+      else:
+        print "You didn't enter in a correct choice!"
+  return playerclass
+
 
 while 1:
   os.system("clear")
@@ -371,3 +455,21 @@ gender = identity[2]
 
 os.system("clear")
 print name[0], name[1], "is a", gender, race + "."
+
+# additional, unseen calculations that finish off race bonuses
+
+langs = r_bonus(langss=['common', 'elven', 'danish', 'orcish', 'porn'])
+
+os.system("clear")
+if 'common' in langs:
+  print "A man walks up to you and says 'Heyo, nerd!"
+  # NpcName.converse(tongue='common')
+elif 'common' not in langs:
+  print "A man walks up to you and says 'Uuxl, llwe!"
+  # if try_lang(NpcName) == True:
+  #   NpcName.converse(tongue='common')
+  # else:
+  #   NpcName.mood(-2)
+
+print "Let's choose your class!"
+print chooseclass()
