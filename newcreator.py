@@ -364,6 +364,57 @@ def r_bonus(size='medium', speed=30, langss=['common', None, None, None, None, N
   return newlangs
 
 def chooseclass():
+  
+  class_info = ("""
+The bard uses skill and spell alike to bolster his allies, confound his enemies,
+and build upon his fame.
+
+Typically masters of one or many forms of artistry, bards possess an uncanny
+ability to know more than they should and use what they learn to keep themselves
+and their allies ever one step ahead of danger.
+
+Hit die: d8
+  """, """
+A devout follower of a diety, the cleric can heal wounds, raise the dead, and
+call down the wrath of the gods.
+  """, """
+Brave and stalwart, the fighter is a master of all manner of arms and armor.
+  """, """
+The wizard masters magic through constant study that gives him incredible
+magical power.
+  """, """
+The rogue is a thief and a scout, an opportunist capable of delivering brutal
+strikes against unwary foes.
+  """, """
+The paladin is the knight in shining armor, a devoted follower of law and good.
+  """, """
+The druid is a worshipper of all things natural--a spellcaster, a friend to
+animals, and a skilled shapechanger.
+  """, """
+Lurking on the fringe of civilization, the witch makes a powerful connection
+with a patron that grants her strange and mysterious powers through a special
+familiar.
+
+Witches can fill many roles, from seer to healer, and their hexes grant them a
+number of abilities that are useful in a fight.
+
+Hit die: d6
+  """, """
+The alchemist is the master of alchemy, using extracts, to grant him power, 
+mutagens to enhance his form, and bombs to destroy his enemies.
+
+Alchemists fuck around with chemicals and compounds all day, what do you want?
+They're pretty nuts and can be dangerous to be around, but shit they have bombs
+you need to chill out if you can't see the benefits of that over danger.
+
+Fuck.
+
+Hit Die: d8
+  """, """
+Monks eat a dick.
+  """
+)
+
   def explainclasses():
     while 1:
       os.system("clear")
@@ -378,21 +429,23 @@ Enter 'q' to exit back to class selection
 5 - Rogue
 6 - Paladin
 7 - Druid
-8 - Witch
+8 - Witch (Warlock)
 9 - Alchemist
 10 - Monk
       """
       next = raw_input("> ")
 
-      if next == 'q' or next == 'Q':
+      if next == "q" or next == "Q":
         break
-      elif int(next) + 1 in range(10):
-        os.system("clear")
-        print class_text
-        raw_input("Press ENTER")
-      else: 
-
-
+      elif next != 'q':
+        try:
+          os.system("clear")
+          print class_info[int(next) - 1]
+          raw_input("Press ENTER")
+        except ValueError:
+          print "You entered an invalid option."
+          raw_input("Press ENTER")
+      
   while 1:
     os.system("clear")
     print "Choose from one of the following classes,"
