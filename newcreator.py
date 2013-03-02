@@ -445,6 +445,9 @@ Enter 'q' to exit back to class selection
         except ValueError:
           print "You entered an invalid option."
           raw_input("Press ENTER")
+        except IndexError:
+          print "You entered an invalid option."
+          raw_input("Press ENTER")
       
   while 1:
     os.system("clear")
@@ -470,7 +473,7 @@ Enter 'q' to exit back to class selection
 
     try:
       if int(next) - 1 in range(10):
-        playerclass = classes[int(next)]
+        playerclass = classes[int(next) - 1]
         break
     except ValueError:
       if next == 'h' or next == 'H':
@@ -531,5 +534,4 @@ elif 'common' not in langs:
   # else:
   #   NpcName.mood(-2)
 
-print "Let's choose your class!"
 print chooseclass()
