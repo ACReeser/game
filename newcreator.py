@@ -337,10 +337,8 @@ def choosegender():
 
 def roll_d(x, y=1):
   exp = 0
-  rolls = [0] * y
   for i in range(y):
-    rolls[i] = randint(1, x)
-    exp += rolls[i]
+    exp += randint(1, x)
   return exp
 
 def convert_abils(x):
@@ -371,6 +369,7 @@ def chooseclass():
       os.system("clear")
       print """
 Which class would you like to learn about?
+Enter 'q' to exit back to class selection
 ------------------------------------------
 1 - Bard
 2 - Cleric
@@ -384,6 +383,14 @@ Which class would you like to learn about?
 10 - Monk
       """
       next = raw_input("> ")
+
+      if next == 'q' or next == 'Q':
+        break
+      elif int(next) + 1 in range(10):
+        os.system("clear")
+        print class_text
+        raw_input("Press ENTER")
+      else: 
 
 
   while 1:
