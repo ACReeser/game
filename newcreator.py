@@ -377,19 +377,31 @@ Hit die: d8
   """, """
 A devout follower of a diety, the cleric can heal wounds, raise the dead, and
 call down the wrath of the gods.
+
+Hit die: d8
   """, """
 Brave and stalwart, the fighter is a master of all manner of arms and armor.
+
+Hit die: d10
   """, """
 The wizard masters magic through constant study that gives him incredible
 magical power.
+
+Hit die: d6
   """, """
 The rogue is a thief and a scout, an opportunist capable of delivering brutal
 strikes against unwary foes.
+
+Hit die: d8
   """, """
 The paladin is the knight in shining armor, a devoted follower of law and good.
+
+Hit die: d10
   """, """
 The druid is a worshipper of all things natural--a spellcaster, a friend to
 animals, and a skilled shapechanger.
+
+Hit die: d8
   """, """
 Lurking on the fringe of civilization, the witch makes a powerful connection
 with a patron that grants her strange and mysterious powers through a special
@@ -409,9 +421,11 @@ you need to chill out if you can't see the benefits of that over danger.
 
 Fuck.
 
-Hit Die: d8
+Hit die: d8
   """, """
 Monks eat a dick.
+
+Hit die: d8
   """
 )
 
