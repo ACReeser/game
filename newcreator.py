@@ -548,4 +548,7 @@ elif 'common' not in langs:
   # else:
   #   NpcName.mood(-2)
 
-print chooseclass()
+p_class = chooseclass()
+
+print name[0], "is a", gender, race, p_class + "."
+showabils()
