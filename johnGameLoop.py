@@ -1,7 +1,9 @@
 import sys
 import os
+from xml.dom.minidom import *
 from random import randint
 import pickle
+import string
 
 #Alex's text-adventure engine
 #I'm thinking storing the data in XML and using data-based links between rooms will be the way to go
@@ -23,12 +25,12 @@ import pickle
 
 #LocaleRef is used to list what the PC can move to. They are the "signposts" that provide enough info to move to it
 class LocaleReference():
-	def __init__(self, displayName, type, shorthand, desc, path):
-		self.displayName = name #the exposed name of the locale.
+	def __init__(self, dest, type, cmd, signpost):
+		self.destination = dest #the exposed name of the locale.
 		self.type = type #the CLASSNAME of the locale. this won't be exposed to the user
-		self.desc = desc #the description of the 'path' to the locale, not the description of the locale itself. This will be exposed
-		self.shorthand = shorthand #usually the way to invoke a move to there. Can be paired with goto or go. Example: NORTH or DOWN or UP or TAVERN
-		self.path = path #the path to find the data in XML if we use that for data, or the path to the file we'll be loading
+		self.signpost = signpost #the description of the 'path' to the locale, not the description of the locale itself. This will be exposed
+		self.command = cmd #usually the way to invoke a move to there. Can be paired with goto or go. Example: NORTH or DOWN or UP or TAVERN
+		#self.path = path #the path to find the data in XML if we use that for data, or the path to the file we'll be loading
 
 #a Locale is a room that is inhabited sequentially
 class Locale():
@@ -44,7 +46,10 @@ class Locale():
 			except AttributeError:
 				print("You don't know that.")
 		else:
-			print("You can't do that")
+			if command in self.refs.keys():
+				print("You go to "+self.refs[command].destination)
+			else:
+				print("You can't do that")
 	#this will be used in sub-classes as a convenience wrapper
 	def addValids(self, newCommands):
 		self.validCommands.extend(newCommands)
@@ -53,12 +58,12 @@ class Locale():
 		self.shorts = {}
 		for ref in self.refs:
 			self.shorts[string.upper(ref.shorthand)] = ref
-	def __init__(self, myPath, refs):
+	def __init__(self, name, desc):
 		#todo load the data for this locale from the path
-		self.name = myRef.displayName
-		self.description = myRef.desc
+		self.name = name
+		self.description = desc
 		#we'll probably want to 
-		self.refs = refs
+		self.refs = {}
 		self.addShorthands()
 		self.validCommands = ["look", "dance", "loot"]
 	#enter is a basic event that is called when you move into the room
@@ -71,24 +76,38 @@ class Locale():
 		#print the basic
 		print("You are in a "+self.name)
 		print(self.description)
-		for ref in self.refs:
-			print("")
+		for k in self.refs.keys():
+			print(str(self.refs[k].command)+": "+str(self.refs[k].signpost))
 	def dance(self):
 		print("You wiggle about erratically. You should take dancing lessons.")
 	
 #Two specific instances are example'd here: Town and TreasureTrove. Still working on how to hook them together
-class Town(Locale):
-	def __init__(self, townName):
-		Locale.__init__(self,townName)
+class TownCenter(Locale):
+	def __init__(self, townName, desc):
+		Locale.__init__(self,townName, desc)
 		self.addValids(["buy", "sell"])
 	def buy(self):
 		print("You bought all the things!")
 	def sell(self):
 		print("You receive a bunch of money from your wares")
 		
+class Tavern(Locale):
+	def __init__(self, tavernName, desc):
+		Locale.__init__(self,tavernName, desc)
+		self.addValids(["beer"])
+	def beer(self):
+		print("The barmaid doesn't even flinch.")
+		
+class Tunnel(Locale):
+	def __init__(self, tunnelName, desc):
+		Locale.__init__(self,tunnelName, desc)
+		self.addValids(["fear"])
+	def beer(self):
+		print("You piss your pants. Weenie.")
+		
 class TreasureTrove(Locale):
-	def __init__(self, name):
-		Locale.__init__(self,name)
+	def __init__(self, troveName, desc):
+		Locale.__init__(self,troveName, desc)
 		#make sure to add "swim" as an action
 		self.addValids(["swim"])
 		self.loot = ["a shiny sword", "chests o' gold", "dat ass"]
@@ -102,11 +121,12 @@ class TreasureTrove(Locale):
 class Game:
 	def __init__(self):
 		#currentLocale will have the current context
-		self.currentLocale = Town("Mockingham")
+		self.currentLocale = None
 		#currentEnemy will have the opposing force. (may need to be a list if you want multiple monsters)
 		self.currentEnemy = None
 		#currentNPC will have the person you're talking or interacting with
 		self.currentNPC = None
+		self.loadMap()
 	#testing out pickle for serialization
 	def save(self):
 		saveFile = open("currentLocale.pkl", 'w')
@@ -115,6 +135,35 @@ class Game:
 		loadFile = open("currentLocale.pkl", 'r')
 		self.currentLocale = pickle.load(loadFile)
 		self.currentLocale.enter()
+	def findRoom(self, type, name):
+		for candidate in self.doc.getElementsByTagName(type):
+			if (candidate.name == name):
+				return candidate
+	def loadMap(self):
+		self.doc = xml.dom.minidom.parse("vanyaville.xml")
+		#self.rooms = {}
+		self.lastRoom = None
+		rootNodes = self.doc.getElementsByTagName("rooms")
+		for root in rootNodes:
+			print('root '+root.tagName)
+			for room in root.childNodes:
+				print('traversing '+room.tagName)
+				self.recurseNode(room, None)
+	def recurseNode(self, room, parent):
+		if (room.tagName == "link"):
+			parent.refs[room.getAttribute("cmd")] = (LocaleReference(room.getAttribute("dest"), room.getAttribute("type"), room.getAttribute("cmd"),  room.getAttribute("signpost")))
+		elif (room.tagName =="links"):
+			for subRoom in room.childNodes:
+				self.recurseNode(subRoom, parent)
+		else:
+			roomClass = globals()[room.tagName]
+			newRoom = roomClass(room.getAttribute("name"), room.getAttribute("desc"))
+			if self.currentLocale == None:
+				self.currentLocale = newRoom
+			#self.rooms[room.tagName+"|"+room.getAttribute("name")] = newRoom
+			for subRoom in room.childNodes:
+				self.recurseNode( subRoom, newRoom)
+			
 		
 #and of course, we have our simple game loop
 def Loop():
@@ -126,10 +175,10 @@ def Loop():
 			#TODO: save first and cancel options
 			sys.exit()
 		elif (nextCommand == "save"):
-			game.save()
+			#game.save()
 			return True
 		elif(nextCommand == "load"):
-			game.load()
+			#game.load()
 			return True
 		else:
 			return False
