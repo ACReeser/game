@@ -27,7 +27,7 @@ import string
 class LocaleReference():
 	def __init__(self, dest, type, cmd, signpost):
 		self.destination = dest #the exposed name of the locale.
-		self.type = type #the CLASSNAME of the locale. this won't be exposed to the user
+		self.type = type #the str CLASSNAME of the locale. this won't be exposed to the user
 		self.signpost = signpost #the description of the 'path' to the locale, not the description of the locale itself. This will be exposed
 		self.command = cmd #usually the way to invoke a move to there. Can be paired with goto or go. Example: NORTH or DOWN or UP or TAVERN
 		#self.path = path #the path to find the data in XML if we use that for data, or the path to the file we'll be loading
@@ -46,10 +46,7 @@ class Locale():
 			except AttributeError:
 				print("You don't know that.")
 		else:
-			if command in self.refs.keys():
-				print("You go to "+self.refs[command].destination)
-			else:
-				print("You can't do that")
+			print("You can't do that")
 	#this will be used in sub-classes as a convenience wrapper
 	def addValids(self, newCommands):
 		self.validCommands.extend(newCommands)
@@ -136,12 +133,12 @@ class Game:
 		self.currentLocale = pickle.load(loadFile)
 		self.currentLocale.enter()
 	def findRoom(self, type, name):
-		for candidate in self.doc.getElementsByTagName(type):
-			if (candidate.name == name):
-				return candidate
+		candidateKey = str(type)+"|"+str(name)
+		if candidateKey in self.rooms.keys():
+			return self.rooms[candidateKey]
 	def loadMap(self):
 		self.doc = xml.dom.minidom.parse("vanyaville.xml")
-		#self.rooms = {}
+		self.rooms = {}
 		self.lastRoom = None
 		rootNodes = self.doc.getElementsByTagName("rooms")
 		for root in rootNodes:
@@ -160,7 +157,7 @@ class Game:
 			newRoom = roomClass(room.getAttribute("name"), room.getAttribute("desc"))
 			if self.currentLocale == None:
 				self.currentLocale = newRoom
-			#self.rooms[room.tagName+"|"+room.getAttribute("name")] = newRoom
+			self.rooms[room.tagName+"|"+room.getAttribute("name")] = newRoom
 			for subRoom in room.childNodes:
 				self.recurseNode( subRoom, newRoom)
 			
@@ -179,6 +176,12 @@ def Loop():
 			return True
 		elif(nextCommand == "load"):
 			#game.load()
+			return True
+		elif nextCommand in game.currentLocale.refs.keys():
+			nextLink = game.currentLocale.refs[nextCommand]
+			print("You go to "+nextLink.destination)
+			game.currentLocale = game.findRoom(nextLink.type, nextLink.destination)
+			game.currentLocale.enter()
 			return True
 		else:
 			return False
