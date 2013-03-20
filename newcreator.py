@@ -335,7 +335,7 @@ def choosegender():
 
   return (first, last, gender)
 
-def roll_d(x, y=1):
+def roll_d(x=20, y=1):
   exp = 0
   for i in range(y):
     exp += randint(1, x)
