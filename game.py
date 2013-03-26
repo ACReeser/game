@@ -1,111 +1,76 @@
-import sys
 from random import randint
-import os
-import time
-import title
-import rand_gen
 
-def countdown(message):
-  os.system("clear")
-  count = 0
-  taunts = [
-    "I blew a guy, once.",
-    "Suck a dick!",
-    "I buried them under the north-west corner of the house",
-    "2/10 would not play again",
-    "Wimp wamp womp.",
-    "Beep boop bop.",
-    "I'm in love with Ryan Gosling."
-  ]
-  while count < 3:
-    count = count + 1
-    message = message + "."
-    print message
-    time.sleep(0.7)
-    os.system("clear")
-  print taunts[randint(0, len(taunts)-1)]
-  time.sleep(0.5)
-  os.system("clear")
-  quit()
+class Room(object):
+    def __init__(self, col, row, items):
+        self.items = items
+        self.grid = []
+        for i in range(row):
+            self.grid.append("O" * col)
 
-def import_char():
-  from_file = raw_input("What is your character's first name? ")
-  from_file = from_file.capitalize() + ".py"
-  in_file = open(from_file)
-  char_data = in_file.read()
-  in_file.close()
-  return char_data
+    def draw_grid(self):
+        for i in self.grid:
+            print i.center(80)
 
-def charstats():
-    # - This gives the player a text description of their character
-    # Needs to be fleshed out to include clothing and equipment
-  def descript():
-    os.system("clear")
-    print "%s is a %s human. %s stands %s, sporting a(n) %s build." % (full_name, gender, p_nom.capitalize(), height, weight)
-    print "\nIf you were to ask a lay-person to describe", first_name, "they'd"
-    print "say that", p_nom, "has grown", hair, "and that", p_gen, eyes, "pierce"
-    print "the soul of anyone around."
-  
-  # - This prints out the numeric values of the user's stats
-  # ... needs to account for worn items and other status effects
-  # .... needs vast expansion for skills
-  def print_stats():
-    os.system("clear")
-    print "Here are %s's current stats: " % first_name
-    # TK
-    # TK
+dungeon = Room(5, 5, ['corn'])
+dungeon.draw_grid()
 
-  while 1:
-    next = raw_input("Would you like to see your character description, or your stats?\n[1] - Description\n[2] - Stats")
-    if next in ['1', '2', "q", "Q"]: break
+class Character(object):
+    def __init__(self, name, hp):
+        self.name = name
+        self.hp = hp
 
-  if next == '1':
-    descript()
-  elif next == '2':
-    print_stats()
-  elif next == "q" or next == "Q":
-    pass
+    def attack(self, x):
+        dam = randint(0, 5)
+        x.damage(dam)
 
-def room():
-  stuff = {
-    'a chair' : 'a wooden chair, with eyeballs carved all up in it',
-    'corn' : 'a small pile of corn. It smells delicious and you want to eat it',
-    'a sword' : 'a thick sword, that glistens and shit',
-  }
+    def move(self, direction):
+        self.position
 
-  while 1:
-    print "You see:\n*  %s\n*  %s\n*  %s" % (stuff.keys()[0], stuff.keys()[1], stuff.keys()[2])
-    examine = raw_input("Whaddaya want to examine? ")
-    if examine in stuff or examine in ["q", "Q"]: break
+class Item(object):
+    def __init__(self, name, descrip, hp, condition):
+        self.name = name
+        self.descrip = descrip
+        self.hp = hp
+        self.condition = condition
 
-  if examine not in ["q", "Q"]:
-    print stuff[examine].capitalize()
-  else:
-    print "Quitting?"
+    def look(self):
+        print "You see a " + self.descrip + "."
+        print "It is in %s condition." % self.condition
+        print "It has %d hit points." % self.hp
 
-def town():
-  print rand_gen.rand_town()
+    def damage(self, atk):
+        if self.hp == 0:
+            print "You beat the dead %s like a psychopath." % self.name
+        elif (self.hp - atk) <= 0:
+            self.hp = 0
+            print "You kill the", self.name + "."
+        else:
+            self.hp -= atk
+            print "You hurt the", self.name + "."
 
-def talk():
-  rand_gen.npc_print()
+in_room = {}
+hat = Item("hat", "a black tophat", 5, "terrible")
+in_room[hat.name] = hat
 
-os.system("clear")
-title.printtitle()
-
-try:
-  exec import_char()
-  print first_name +".py", "successfully loaded!"
-except:
-  os.system("clear")
-  print "\n\n\n\n\n\n\n                        Your character has no save file!"
-  raw_input()
-  os.system("clear")
-  quit()
+player = Character("Jack", 15)
 
 while 1:
-  next = raw_input("> ")
-  if next in ["room", "charstats", "town", "talk"]:
-    exec next + "()"
-  elif next in ["Q", "q"]: break
-  elif next in ["H", "h"]:
-    print title.help()
+    next = raw_input("> ")
+    if next == "look":
+        print "What would you like to look at?"
+        for item in in_room:
+            print item
+        next1 = raw_input("> ")
+        if next1 in in_room:
+            in_room[next1].look()
+    elif next == "attack":
+        print "What would you like to attack?"
+        for item in in_room:
+            print item
+        next2 = raw_input("> ")
+        if next2 in in_room:
+            player.attack(in_room[next2])
+        else:
+            print "There is no %s in this room." % next2
+    elif next.lower() == 'q':
+        quit()
