@@ -1,15 +1,26 @@
 from random import randint
+import os
 
 class Room(object):
     def __init__(self, col, row, items):
         self.items = items
         self.grid = []
-        for i in range(row):
-            self.grid.append("O" * col)
+        self.size = [col, row]
+        for i in range(0, self.size[1]):
+            self.grid.append(["O"] * self.size[0])
 
     def draw_grid(self):
+        os.system("clear")
+        print "\n\n\n"
         for i in self.grid:
-            print i.center(80)
+            print " ".join(i)
+        print "\n\n\n"
+
+    def update_grid(self, coor):
+        self.grid = []
+        for i in range(0, self.size[1]):
+            self.grid.append(["O"] * self.size[0])
+        self.grid[coor[1]][coor[0]] = "X"
 
 dungeon = Room(5, 5, ['corn'])
 dungeon.draw_grid()
@@ -18,13 +29,26 @@ class Character(object):
     def __init__(self, name, hp):
         self.name = name
         self.hp = hp
+        self.position = [0, 0]
 
     def attack(self, x):
         dam = randint(0, 5)
         x.damage(dam)
 
     def move(self, direction):
-        self.position
+        dirdic = {'8':-1, '2':1, '4':-1, '6':1}
+        if direction == '4' or direction == '6':
+            test = self.position[0] + dirdic[direction]
+            if 4 >= test >= 0:
+                self.position[0] = test
+            else:
+                pass
+        elif direction == '8' or direction == '2':
+            test = self.position[1] + dirdic[direction]
+            if 4 >= test >= 0:
+                self.position[1] = test
+            else:
+                pass
 
 class Item(object):
     def __init__(self, name, descrip, hp, condition):
@@ -72,5 +96,11 @@ while 1:
             player.attack(in_room[next2])
         else:
             print "There is no %s in this room." % next2
+    elif next == "move":
+        print "Where would you like to move?"
+        next3 = raw_input("> ")
+        player.move(next3)
+        dungeon.update_grid(player.position)
+        dungeon.draw_grid()
     elif next.lower() == 'q':
         quit()
