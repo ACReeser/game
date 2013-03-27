@@ -1,8 +1,20 @@
-b1 = u"\u2588"
-b2 = u"\u2591"
-b3 = u"\u2592"
-b4 = u"\u2593"
+from random import randint
 
-grad = b1, b2, b3, b4
+traits_orig = ['is crazy', 'loves music obsessively', 
+        'is just waiting for the end of the world', 
+        'loves Jesus Chriiiiiiiiiiiiist', 'wants butt seks',
+        'loves to cook', 'has a little black book with his poems in',
+        'hates himself']
 
-print " " * 40 + b1 
+class drone(object):
+    def __init__(self):
+        traits = traits_orig
+        self.odds = []
+        for i in range(3):
+            got = randint(0, len(traits) - 1)
+            self.odds.append(traits[got])
+            traits.remove(traits[got])
+
+bob = drone()
+for i in range(len(bob.odds)):
+    print "Bob %s." % bob.odds[i]
