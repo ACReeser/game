@@ -12,8 +12,10 @@ class Room(object):
     def draw_grid(self):
         os.system("clear")
         print "\n\n\n"
+        print ("-"* ((self.size[0] * 2) + 1)).center(80)
         for i in self.grid:
-            print " ".join(i)
+            print " ".join(i).center(80)
+        print ("-"* ((self.size[0] + 2) + 1)).center(80)
         print "\n\n\n"
 
     def update_grid(self, coor):
