@@ -2,9 +2,10 @@ from random import randint
 
 traits_orig = ['is crazy', 'loves music obsessively', 
         'is just waiting for the end of the world', 
-        'loves Jesus Chriiiiiiiiiiiiist', 'wants butt seks',
+        'loves you Jesus Chriiiiiiiiiiiiist', 'wants butt seks',
         'loves to cook', 'has a little black book with his poems in',
-        'hates himself']
+        'hates themself', 'once owned a snake', 'is ugly', 'sucks',
+        'killed a man, once', 'thinks life is pointless']
 
 class drone(object):
     def __init__(self):
@@ -18,3 +19,4 @@ class drone(object):
 bob = drone()
 for i in range(len(bob.odds)):
     print "Bob %s." % bob.odds[i]
+
